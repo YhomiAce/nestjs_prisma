@@ -32,10 +32,10 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
       useClass: LoggingInterceptor,
       scope: Scope.REQUEST,
     },
-    {
-      provide: APP_FILTER,
-      useClass: HttpExceptionFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: HttpExceptionFilter,
+    // },
   ],
 })
 export class AppModule implements NestModule {

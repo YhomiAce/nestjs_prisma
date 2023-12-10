@@ -12,6 +12,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
   catch(exception: HttpException, host: ArgumentsHost) {
     this.logger.debug('Running HttpExceptionFilter...');
+    this.logger.debug('Exception Message:', exception.message);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
@@ -20,7 +21,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
       statusCode: status,
       timestamps: new Date().toISOString(),
       path: request.url,
-      message: 'An Error occurred please contact developer',
+      message:
+        exception.message ?? 'An Error occurred please contact developer',
     });
   }
 }

@@ -5,6 +5,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
   Post,
+  UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { AppService } from './app.service';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { FreezePipe } from './pipes/freeze.pipe';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 @Controller()
 export class AppController {
@@ -31,7 +33,8 @@ export class AppController {
   }
 
   @Get('error')
+  @UseFilters(HttpExceptionFilter)
   getError(): string {
-    throw new InternalServerErrorException();
+    throw new InternalServerErrorException('Server error');
   }
 }
